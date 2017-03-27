@@ -3,6 +3,7 @@
 MACHINE_OS=$(uname)
 MACHINE_TYPE=$(uname -m)
 BASEDIR=$(dirname "$0")
+LOGDIR=${LOGDIR:="/var/log"}
 VERSION=$(cat "${BASEDIR}"/selenium_version)
 
 # By default java on linux uses /dev/random that can't provide enough entropy for ssd disks or virtual machines.
@@ -31,8 +32,8 @@ fi
 
 java "$JAVA_SWITCHES" \
   -Dphantomjs.binary.path="$PHANTOMJS" \
-  -Dphantomjs.cli.args="--webdriver-logfile=phantomjs.log" \
+  -Dphantomjs.cli.args="--webdriver-logfile=$LOGDIR/phantomjs.log" \
   -Dwebdriver.chrome.driver="$CHROMEDRIVER" \
-  -Dwebdriver.chrome.logfile="chromedriver.log" \
+  -Dwebdriver.chrome.logfile="$LOGDIR/chromedriver.log" \
   -jar "$BASEDIR/bin/selenium-server-standalone-$VERSION".jar \
-  -port 4455
+  -port 4455 > >(tee $LOGDIR/selenium_server.log)
