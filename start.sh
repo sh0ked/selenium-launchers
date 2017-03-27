@@ -5,6 +5,7 @@ MACHINE_TYPE=$(uname -m)
 BASEDIR=$(dirname "$0")
 LOGDIR=${LOGDIR:="/var/log"}
 VERSION=$(cat "${BASEDIR}"/selenium_version)
+JAVA_PATH=${JAVA_PATH:=""}
 
 # By default java on linux uses /dev/random that can't provide enough entropy for ssd disks or virtual machines.
 # https://code.google.com/p/selenium/wiki/FrequentlyAskedQuestions#Q:_Selenium_server_sometimes_takes_a_long_time_to_start_a_new_se
@@ -30,7 +31,7 @@ if [[ ! -f $PHANTOMJS ]]; then
     PHANTOMJS="$BASEDIR/$DRIVER_PATH/$MACHINE_TYPE/phantomjs"
 fi
 
-java "$JAVA_SWITCHES" \
+$JAVA_PATH/java "$JAVA_SWITCHES" \
   -Dphantomjs.binary.path="$PHANTOMJS" \
   -Dphantomjs.cli.args="--webdriver-logfile=$LOGDIR/phantomjs.log" \
   -Dwebdriver.chrome.driver="$CHROMEDRIVER" \
