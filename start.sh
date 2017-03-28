@@ -37,4 +37,5 @@ $JAVA_PATH/java "$JAVA_SWITCHES" \
   -Dwebdriver.chrome.driver="$CHROMEDRIVER" \
   -Dwebdriver.chrome.logfile="$LOGDIR/chromedriver.log" \
   -jar "$BASEDIR/bin/selenium-server-standalone-$VERSION".jar \
-  -port 4455 > >(tee $LOGDIR/selenium_server.log)
+  -port 4455 > >(tee $LOGDIR/selenium_server.log) 2>&1
+
